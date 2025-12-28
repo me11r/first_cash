@@ -1,0 +1,167 @@
+// 1. Data Source (The Menu)
+const menuData = [
+    {
+        id: 1,
+        name: "Classic Espresso",
+        category: "coffee",
+        price: 2.50,
+        kcal: 5,
+        image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+        id: 2,
+        name: "Cappuccino",
+        category: "coffee",
+        price: 3.50,
+        kcal: 120,
+        image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+        id: 3,
+        name: "Iced Latte",
+        category: "coffee",
+        price: 4.00,
+        kcal: 150,
+        image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+        id: 4,
+        name: "Avocado Toast",
+        category: "food",
+        price: 8.50,
+        kcal: 350,
+        image: "https://images.unsplash.com/photo-1588137372308-15f75323a399?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+        id: 5,
+        name: "Blueberry Muffin",
+        category: "dessert",
+        price: 3.00,
+        kcal: 400,
+        image: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+        id: 6,
+        name: "Cheesecake Slice",
+        category: "dessert",
+        price: 5.50,
+        kcal: 500,
+        image: "https://images.unsplash.com/photo-1524351199678-941a58a3df50?auto=format&fit=crop&w=400&q=80"
+    }
+];
+
+// Cart State
+let cart = [];
+
+// DOM Elements
+const menuGrid = document.getElementById('menu-grid');
+const cartModal = document.getElementById('cart-modal');
+const cartItemsContainer = document.getElementById('cart-items');
+const cartTotalEl = document.getElementById('cart-total');
+const cartKcalEl = document.getElementById('cart-kcal');
+const cartCountEl = document.getElementById('cart-count');
+
+// 2. Initialize
+window.onload = () => {
+    renderMenu('all');
+};
+
+// 3. Render Menu Function
+function renderMenu(category) {
+    menuGrid.innerHTML = ''; // Clear current
+
+    const filtered = category === 'all'
+        ? menuData
+        : menuData.filter(item => item.category === category);
+
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-item';
+        card.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="menu-img">
+            <div class="menu-info">
+                <div class="menu-header">
+                    <h3>${item.name}</h3>
+                    <span class="price">$${item.price.toFixed(2)}</span>
+                </div>
+                <p class="kcal">${item.kcal} kcal</p>
+                <button class="add-btn" onclick="addToCart(${item.id})">Add to Basket</button>
+            </div>
+        `;
+        menuGrid.appendChild(card);
+    });
+
+    // Update Buttons UI
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase() === category || (category === 'all' && btn.textContent === 'All')) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// 4. Filter Function
+function filterMenu(category) {
+    renderMenu(category);
+}
+
+// 5. Cart Logic
+function addToCart(id) {
+    const product = menuData.find(p => p.id === id);
+    cart.push(product);
+    updateCartUI();
+    // Optional: Visual feedback
+    alert(`${product.name} added to cart!`);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+}
+
+function updateCartUI() {
+    // Update Badge
+    cartCountEl.innerText = cart.length;
+
+    // Update List
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    let totalKcal = 0;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your basket is empty.</p>';
+    } else {
+        cart.forEach((item, index) => {
+            total += item.price;
+            totalKcal += item.kcal;
+
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div>
+                    <strong>${item.name}</strong><br>
+                    <small>$${item.price.toFixed(2)} | ${item.kcal} kcal</small>
+                </div>
+                <span class="remove-btn" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></span>
+            `;
+            cartItemsContainer.appendChild(div);
+        });
+    }
+
+    // Update Totals
+    cartTotalEl.innerText = total.toFixed(2);
+    cartKcalEl.innerText = totalKcal;
+}
+
+function toggleCart() {
+    const isVisible = cartModal.style.display === 'block';
+    cartModal.style.display = isVisible ? 'none' : 'block';
+}
+
+// Close cart if clicking outside
+window.onclick = function (event) {
+    if (event.target == cartModal) {
+        cartModal.style.display = "none";
+    }
+}
+
