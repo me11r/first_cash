@@ -1,80 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Menu</title>
+    <title>Café Aroma - Demo</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <header>
-        <div class="logo">
-            <h1>Restaurant Name</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="menu">
-            <h2>Our Menu</h2>
-            <div class="menu-item" id="appetizers">
-                <h3>Appetizers</h3>
-                <ul>
-                    <li>
-                        <h4>Spring Rolls</h4>
-                        <p>Fresh vegetables wrapped in crispy rice paper.</p>
-                        <span>$5.99</span>
-                    </li>
-                    <li>
-                        <h4>Garlic Bread</h4>
-                        <p>Toasted bread with garlic butter.</p>
-                        <span>$3.99</span>
-                    </li>
-                </ul>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Café Aroma</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+        </ul>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Fresh Coffee. Fresh Ideas.</h1>
+            <p>Experience the best brew in the city.</p>
+            <a href="#menu" class="btn">View Menu</a>
+        </div>
+    </section>
+
+    <section id="menu" class="container">
+        <h2>Our Menu</h2>
+
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterMenu('all')">All</button>
+            <button class="cat-btn" onclick="filterMenu('coffee')">Coffee</button>
+            <button class="cat-btn" onclick="filterMenu('food')">Food</button>
+            <button class="cat-btn" onclick="filterMenu('dessert')">Desserts</button>
+        </div>
+
+        <div id="menu-grid" class="menu-grid">
+        </div>
+    </section>
+
+    <section id="about" class="container bg-light">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Founded in 2024, Café Aroma is dedicated to sustainable sourcing and artisanal roasting. We believe a
+                    cup of coffee is more than a drink; it's a ritual.</p>
+                <p><strong>Open Hours:</strong> Mon-Sun: 8:00 AM - 10:00 PM</p>
+                <p><strong>Phone:</strong> +1 234 567 890</p>
             </div>
-            <div class="menu-item" id="main-course">
-                <h3>Main Course</h3>
-                <ul>
-                    <li>
-                        <h4>Grilled Chicken</h4>
-                        <p>Juicy chicken breast grilled to perfection.</p>
-                        <span>$12.99</span>
-                    </li>
-                    <li>
-                        <h4>Pasta Alfredo</h4>
-                        <p>Creamy Alfredo pasta with grilled chicken.</p>
-                        <span>$14.99</span>
-                    </li>
-                </ul>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=600&q=80"
+                    alt="Cafe Interior">
             </div>
-            <div class="menu-item" id="desserts">
-                <h3>Desserts</h3>
-                <ul>
-                    <li>
-                        <h4>Chocolate Cake</h4>
-                        <p>Rich chocolate cake with a creamy center.</p>
-                        <span>$6.99</span>
-                    </li>
-                    <li>
-                        <h4>Ice Cream</h4>
-                        <p>Vanilla, chocolate, and strawberry flavors.</p>
-                        <span>$4.99</span>
-                    </li>
-                </ul>
+        </div>
+    </section>
+
+    <section id="reviews" class="container">
+        <h2>Customer Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Best latte I've ever had! The atmosphere is perfect for working."</p>
+                <span>- Sarah J.</span>
             </div>
-        </section>
-    </main>
+            <div class="review-card">
+                <div class="stars">★★★★☆</div>
+                <p>"Great food, but it gets busy on weekends. Worth the wait!"</p>
+                <span>- Mike T.</span>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"The avocado toast is a game changer. Highly recommend."</p>
+                <span>- Emily R.</span>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 Restaurant Name. All Rights Reserved.</p>
+        <div class="footer-content">
+            <div class="map-section">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1841265722287!2d-73.9877312845941!3d40.75797467932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1626359912068!5m2!1sen!2sus"
+                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="social-links">
+                <h3>Connect With Us</h3>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2024 Café Aroma Demo. Built by You.</p>
     </footer>
 
-    <script src="scripts.js"></script>
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+            <h2>Your Basket</h2>
+            <div id="cart-items">
+                <p>Your basket is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <h3>Total: $<span id="cart-total">0.00</span></h3>
+                <p>Total Calories: <span id="cart-kcal">0</span> kcal</p>
+                <button class="btn checkout-btn" onclick="alert('This is a demo! Checkout would happen here.')">Proceed
+                    to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
